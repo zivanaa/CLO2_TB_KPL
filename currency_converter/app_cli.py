@@ -32,6 +32,14 @@ def run():
 
     choice = input("Enter your choice: ")
 
+    if choice not in menu:
+        print("❌ Invalid option.")
+        return
+
+    if choice == "0":
+        print("👋 Goodbye!")
+        return
+
     try:
         if choice == "1":
             amount = float(input("Enter amount: "))
