@@ -6,8 +6,10 @@ def run():
     print("===================================")
     print("      Currency Converter Menu      ")
     print("===================================")
-    print("1. Convert USD to IDR")
-    print("2. Show all conversions from USD")
+    print("1. Convert USD to EUR")
+    print("2. Convert USD to IDR")
+    print("3. Convert USD to JPY")
+    print("4. Show all conversions from USD")
     print("0. Exit")
 
     choice = input("Enter your choice: ")
@@ -15,9 +17,17 @@ def run():
     try:
         if choice == "1":
             amount = float(input("Enter amount: "))
+            result = convert_currency(amount, "USD", "EUR")
+            print(f"{amount} USD = {result:.2f} EUR")
+        elif choice == "2":
+            amount = float(input("Enter amount: "))
             result = convert_currency(amount, "USD", "IDR")
             print(f"{amount} USD = {result:.2f} IDR")
-        elif choice == "2":
+        elif choice == "3":
+            amount = float(input("Enter amount: "))
+            result = convert_currency(amount, "USD", "JPY")
+            print(f"{amount} USD = {result:.2f} JPY")
+        elif choice == "4":
             amount = float(input("Enter amount: "))
             results = get_all_conversions(amount, "USD")
             for k, v in results.items():
