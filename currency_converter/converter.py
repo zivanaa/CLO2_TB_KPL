@@ -1,6 +1,6 @@
 # converter.py
 
-import requests # type: ignore
+import requests
 from config import BASE_URL, SUPPORTED_CURRENCIES
 
 def is_currency_supported(code):
