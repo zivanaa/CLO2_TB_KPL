@@ -23,6 +23,13 @@ def run():
         "0": {"desc": "Exit"}
     }
 
+    print("=" * 40)
+    print("🌐 Currency Converter Menu (TDC)")
+    print("=" * 40)
+    for key, item in menu.items():
+        print(f"{key}. {item['desc']}")
+    print("=" * 40)
+
     choice = input("Enter your choice: ")
 
     try:
