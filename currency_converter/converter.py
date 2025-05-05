@@ -24,7 +24,7 @@ def get_all_conversions(amount, from_currency):
     assert amount > 0, "Amount must be greater than 0"
     assert is_currency_supported(from_currency), "Unsupported source currency"
 
-    url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{from_currency}"
+    url = f"https://v6.exchangerate-api.com/v6/{"99af1e52e8b504f480478eda"}/latest/{from_currency}"
     response = requests.get(url)
 
     if response.status_code != 200:
