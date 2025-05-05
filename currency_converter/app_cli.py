@@ -1,6 +1,10 @@
-# app_cli_bad.py (Versi tidak efisien)
+# app_cli.py (Versi Benar)
 
 from converter import convert_currency, get_all_conversions, is_currency_supported
+
+def convert_and_print(amount, from_curr, to_curr):
+    result = convert_currency(amount, from_curr, to_curr)
+    print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
 
 def run():
     print("===================================")
