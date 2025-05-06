@@ -17,53 +17,45 @@ def flexible_mode():
         "0": {"desc": "Back to Main Menu"}
     }
 
-
     while True:
         print_menu("Currency Converter - Free Mode", flexible_options)
         choice = input("Select an option (0-2): ")
 
-
         if choice == "0":
             break
-        elif choice == "1":
-            try:
-                amount = float(input("Enter amount: "))
-                from_curr = input("From currency (e.g., USD): ").upper()
-                to_curr = input("To currency (e.g., IDR): ").upper()
 
-                if not is_currency_supported(from_curr):
-                    print("❌ Unsupported source currency.")
-                    continue
+        try:
+            amount = float(input("Enter amount: "))
+            from_curr = input("From currency (e.g., USD): ").upper()
+
+            if not is_currency_supported(from_curr):
+                print("❌ Unsupported source currency.")
+                continue
+
+            if choice == "1":
+                to_curr = input("To currency (e.g., IDR): ").upper()
                 if not is_currency_supported(to_curr):
                     print("❌ Unsupported target currency.")
                     continue
 
                 result = convert_currency(amount, from_curr, to_curr)
                 print(f"\n💱 {amount} {from_curr} = {result:.2f} {to_curr}\n")
-            except ValueError:
-                print("❌ Please enter a valid number.")
-            except Exception as e:
-                print(f"⚠ Error: {e}")
-        elif choice == "2":
-            try:
-                amount = float(input("Enter amount: "))
-                from_curr = input("From currency (e.g., USD): ").upper()
 
-                if not is_currency_supported(from_curr):
-                    print("❌ Unsupported source currency.")
-                    continue
+            elif choice == "2":
                 results = get_all_conversions(amount, from_curr)
                 print(f"\n📊 {amount} {from_curr} to other currencies:")
                 print("-" * 40)
                 for k, v in results.items():
                     print(f"{k: <5}: {v}")
                 print()
-            except ValueError:
-                print("❌ Please enter a valid number.")
-            except Exception as e:
-                print(f"⚠ Error: {e}")
-        else:
-            print("❌ Invalid menu option.")
+
+            else:
+                print("❌ Invalid menu option.")
+        except ValueError:
+            print("❌ Please enter a valid number.")
+        except Exception as e:
+            print(f"⚠  Error: {e}")
+
 
 def fixed_mode():
     fixed_menu = {
