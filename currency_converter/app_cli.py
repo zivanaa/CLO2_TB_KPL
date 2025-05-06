@@ -97,17 +97,6 @@ def fixed_mode():
     except Exception as e:
         print(f"⚠ Error: {e}")
 
-
-def convert_and_print(amount, from_curr, to_curr):
-    result = convert_currency(amount, from_curr, to_curr)
-    print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
-
-
-def all_conversions_and_print(amount, from_curr):
-    results = get_all_conversions(amount, from_curr)
-    for k, v in results.items():
-        print(f"{amount} {from_curr} = {v} {k}")
-
 def run():
     main_menu = {
         "1": {"desc": "Flexible Mode (input currencies manually)", "action": flexible_mode},
@@ -119,16 +108,15 @@ def run():
         print_menu("Currency Converter with Menu Mode", main_menu)
         choice = input("Select an option (0-2): ")
 
-        choice = input("Select an option (0-2): ")
-        if choice == "0":
-            print("👋 Goodbye!")
-            break
-        elif choice == "1":
-            flexible_mode()
-        elif choice == "2":
-            fixed_mode()
+        if choice in main_menu:
+            if choice == "0":
+                main_menu[choice]["action"]()
+                break
+            else:
+                main_menu[choice]["action"]()
         else:
             print("❌ Invalid menu option.")
+
 
 if __name__ == "__main__":
     run()
