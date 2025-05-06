@@ -20,5 +20,9 @@ class TestCurrencyConverter(unittest.TestCase):
         with self.assertRaises(AssertionError):
             convert_currency(-100, "USD", "IDR")
 
+    def test_same_currency_conversion(self):
+        result = convert_currency(50, "USD", "USD")
+        self.assertEqual(result, 50)
+
 if __name__ == '__main__':
     unittest.main()
