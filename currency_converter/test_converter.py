@@ -1,7 +1,7 @@
 # test_converter.py
 
 import unittest
-from converter import convert_currency
+from converter import convert_currency, is_currency_supported
 
 class TestCurrencyConverter(unittest.TestCase):
     def test_valid_conversion(self):
@@ -27,6 +27,9 @@ class TestCurrencyConverter(unittest.TestCase):
     def test_large_amount_conversion(self):
         result = convert_currency(1_000_000, "EUR", "JPY")
         self.assertTrue(result > 0)
+
+    def test_is_currency_supported_invalid(self):
+        self.assertFalse(is_currency_supported("ABC"))
 
 
 if __name__ == '__main__':
