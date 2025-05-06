@@ -1,37 +1,47 @@
-# currency_history.py
-
+import json
+import os
 import datetime
 
-history = []
+HISTORY_FILE_PATH = "currency_history.json"
 
-def save_conversion(amount, from_currency, to_currency, result):
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    history.append({
-        "amount": amount,
-        "from": from_currency,
-        "to": to_currency,
-        "result": result,
-        "timestamp": timestamp
-    })
+def save_history_to_file(latest_rates):
+    """
+    Menyimpan data kurs terbaru ke file JSON dengan timestamp sebagai key.
+    Tidak menimpa data lama.
+    """
+    history = {}
+    
+    # Muat data lama jika ada
+    if os.path.exists(HISTORY_FILE_PATH):
+        try:
+            with open(HISTORY_FILE_PATH, "r") as f:
+                history = json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Gagal memuat riwayat dari file: {e}")
 
-def show_history():
-    if not history:
-        print("No conversion history yet.")
-        return
-    print("\nConversion History:")
-    print("="*40)
-    for entry in history:
-        print(f"{entry['amount']} {entry['from']} = {entry['result']} {entry['to']} (at {entry['timestamp']})")
-    print("="*40)
+    # Tambahkan entry baru dengan timestamp saat ini
+    timestamp = datetime.datetime.now().isoformat(timespec='minutes')
+    history[timestamp] = latest_rates
 
-def get_previous_conversion(from_currency, to_currency):
-    # Mengambil konversi terakhir yang sesuai
-    for entry in reversed(history):
-        if entry['from'] == from_currency and entry['to'] == to_currency:
-            return entry
-    return None
+    # Simpan kembali ke file
+    try:
+        with open(HISTORY_FILE_PATH, "w") as f:
+            json.dump(history, f, indent=4)
+        print(f"[INFO] Data kurs berhasil disimpan untuk {timestamp}")
+    except Exception as e:
+        print(f"[ERROR] Gagal menyimpan riwayat ke file: {e}")
 
-def calculate_percentage_change(old_value, new_value):
-    if old_value == 0:
-        return 0.0
-    return ((new_value - old_value) / old_value) * 100
+
+def load_history_from_file():
+    """
+    Mengembalikan riwayat historis dari file JSON.
+    """
+    if os.path.exists(HISTORY_FILE_PATH):
+        try:
+            with open(HISTORY_FILE_PATH, "r") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Gagal memuat riwayat dari file: {e}")
+            return {}
+    return {}
+
