@@ -23,6 +23,11 @@ class TestCurrencyConverter(unittest.TestCase):
     def test_same_currency_conversion(self):
         result = convert_currency(50, "USD", "USD")
         self.assertEqual(result, 50)
+    
+    def test_large_amount_conversion(self):
+        result = convert_currency(1_000_000, "EUR", "JPY")
+        self.assertTrue(result > 0)
+
 
 if __name__ == '__main__':
     unittest.main()
