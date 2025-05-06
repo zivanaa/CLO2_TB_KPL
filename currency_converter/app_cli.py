@@ -2,17 +2,26 @@
 
 from converter import convert_currency, get_all_conversions, is_currency_supported
 
-def flexible_mode():
-    while True:
-        print("=" * 50)
-        print("🌐 Currency Converter - Free Mode")
-        print("=" * 50)
-        print("1. Convert from one currency to another")
-        print("2. Show conversions from one currency to ALL")
-        print("0. Back to Main Menu")
-        print("=" * 50)
+def print_menu(title, options):
+    print("=" * 50)
+    print(f"🌐 {title}")
+    print("=" * 50)
+    for key, value in options.items():
+        print(f"{key}. {value['desc']}")
+    print("=" * 50)
 
+def flexible_mode():
+    flexible_options = {
+        "1": {"desc": "Convert from one currency to another"},
+        "2": {"desc": "Show conversions from one currency to ALL"},
+        "0": {"desc": "Back to Main Menu"}
+    }
+
+
+    while True:
+        print_menu("Currency Converter - Free Mode", flexible_options)
         choice = input("Select an option (0-2): ")
+
 
         if choice == "0":
             break
@@ -57,22 +66,21 @@ def flexible_mode():
             print("❌ Invalid menu option.")
 
 def fixed_mode():
-    while True:
-        print("=" * 50)
-        print("🌐 Currency Converter - Quick Menu")
-        print("=" * 50)
-        print("1. USD to EUR")
-        print("2. USD to IDR")
-        print("3. USD to JPY")
-        print("4. IDR to USD")
-        print("5. EUR to USD")
-        print("6. Show all from IDR")
-        print("0. Back to Main Menu")
-        print("=" * 50)
+    fixed_menu = {
+        "1": {"desc": "USD to EUR", "from": "USD", "to": "EUR"},
+        "2": {"desc": "USD to IDR", "from": "USD", "to": "IDR"},
+        "3": {"desc": "USD to JPY", "from": "USD", "to": "JPY"},
+        "4": {"desc": "IDR to USD", "from": "IDR", "to": "USD"},
+        "5": {"desc": "EUR to USD", "from": "EUR", "to": "USD"},
+        "6": {"desc": "Show all from USD", "from": "USD", "to": None},
+        "0": {"desc": "Back to Main Menu"}
+    }
 
-        choice = input("Enter your choice: ")
-        if choice == "0":
-            return
+    print_menu("Currency Converter - Quick Menu", fixed_menu)
+    choice = input("Enter your choice: ")
+
+    if choice == "0":
+        return
 
         try:
             amount = float(input("Enter amount: "))
@@ -115,14 +123,15 @@ def all_conversions_and_print(amount, from_curr):
         print(f"{amount} {from_curr} = {v} {k}")
 
 def run():
+    main_menu = {
+        "1": {"desc": "Flexible Mode (input currencies manually)", "action": flexible_mode},
+        "2": {"desc": "Quick Menu Mode (frequently exchanged currencies)", "action": fixed_mode},
+        "0": {"desc": "Exit", "action": lambda: print("👋 Goodbye!")}
+    }
+    
     while True:
-        print("=" * 50)
-        print("🌐 Currency Converter with Menu Mode")
-        print("=" * 50)
-        print("1. Flexible Mode (input currencies manually)")
-        print("2. Quick Menu Mode (frequently exchanged currencies)")
-        print("0. Exit")
-        print("=" * 50)
+        print_menu("Currency Converter with Menu Mode", main_menu)
+        choice = input("Select an option (0-2): ")
 
         choice = input("Select an option (0-2): ")
         if choice == "0":
