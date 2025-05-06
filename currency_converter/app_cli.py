@@ -64,7 +64,7 @@ def fixed_mode():
         "3": {"desc": "USD to JPY", "from": "USD", "to": "JPY"},
         "4": {"desc": "IDR to USD", "from": "IDR", "to": "USD"},
         "5": {"desc": "EUR to USD", "from": "EUR", "to": "USD"},
-        "6": {"desc": "Show all from USD", "from": "USD", "to": None},
+        "6": {"desc": "Show all from IDR", "from": "IDR", "to": None},
         "0": {"desc": "Back to Main Menu"}
     }
 
