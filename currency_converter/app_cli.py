@@ -69,7 +69,7 @@ def fixed_mode():
     }
 
     while True:
-        print_menu("Currency Converter - Quick Menu", fixed_menu)
+        print_menu("Currency Converter - Popular Menu", fixed_menu)
         choice = input("Enter your choice: ")
 
         if choice not in fixed_menu or choice == "0":
@@ -100,7 +100,7 @@ def fixed_mode():
 def run():
     main_menu = {
         "1": {"desc": "Flexible Mode (input currencies manually)", "action": flexible_mode},
-        "2": {"desc": "Quick Menu Mode (frequently exchanged currencies)", "action": fixed_mode},
+        "2": {"desc": "Quick Menu Mode (popular currencies)", "action": fixed_mode},
         "0": {"desc": "Exit", "action": lambda: print("👋 Goodbye!")}
     }
     
