@@ -13,6 +13,27 @@ def all_conversions_and_print(amount, from_curr):
         print(f"{amount} {from_curr} = {v} {k}")
 
 def run():
+    while True:
+        print("=" * 50)
+        print("🌐 Currency Converter with Menu Mode")
+        print("=" * 50)
+        print("1. Flexible Mode (input currencies manually)")
+        print("2. Quick Menu Mode (frequently exchanged currencies)")
+        print("0. Exit")
+        print("=" * 50)
+
+        choice = input("Select an option (0-2): ")
+        if choice == "0":
+            print("👋 Goodbye!")
+            break
+        elif choice == "1":
+            flexible_mode()
+        elif choice == "2":
+            fixed_mode()
+        else:
+            print("❌ Invalid menu option.")
+    
+
     menu = {
         "1": {"desc": "USD to EUR", "from": "USD", "to": "EUR"},
         "2": {"desc": "USD to IDR", "from": "USD", "to": "IDR"},
