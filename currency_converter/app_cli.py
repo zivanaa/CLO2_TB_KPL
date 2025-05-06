@@ -56,6 +56,53 @@ def flexible_mode():
         else:
             print("❌ Invalid menu option.")
 
+def fixed_mode():
+    print("=" * 50)
+    print("🌐 Currency Converter - Quick Menu")
+    print("=" * 50)
+    print("1. USD to EUR")
+    print("2. USD to IDR")
+    print("3. USD to JPY")
+    print("4. IDR to USD")
+    print("5. EUR to USD")
+    print("6. Show all from USD")
+    print("0. Back to Main Menu")
+    print("=" * 50)
+
+    choice = input("Enter your choice: ")
+    if choice == "0":
+        return
+
+    try:
+        amount = float(input("Enter amount: "))
+        if choice == "1":
+            result = convert_currency(amount, "USD", "EUR")
+            print(f"{amount} USD = {result:.2f} EUR")
+        elif choice == "2":
+            result = convert_currency(amount, "USD", "IDR")
+            print(f"{amount} USD = {result:.2f} IDR")
+        elif choice == "3":
+            result = convert_currency(amount, "USD", "JPY")
+            print(f"{amount} USD = {result:.2f} JPY")
+        elif choice == "4":
+            result = convert_currency(amount, "IDR", "USD")
+            print(f"{amount} IDR = {result:.2f} USD")
+        elif choice == "5":
+            result = convert_currency(amount, "EUR", "USD")
+            print(f"{amount} EUR = {result:.2f} USD")
+        elif choice == "6":
+            results = get_all_conversions(amount, "USD")
+            print(f"\n📊 {amount} USD to popular currencies:")
+            print("-" * 40)
+            for k, v in results.items():
+                if k in {"USD", "EUR", "JPY", "IDR"}:
+                    print(f"{amount} USD = {v} {k}")
+        else:
+            print("❌ Invalid menu option.")
+        print()
+    except Exception as e:
+        print(f"⚠ Error: {e}")
+
 def convert_and_print(amount, from_curr, to_curr):
     result = convert_currency(amount, from_curr, to_curr)
     print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
