@@ -71,38 +71,32 @@ def fixed_mode():
     print_menu("Currency Converter - Quick Menu", fixed_menu)
     choice = input("Enter your choice: ")
 
-    if choice == "0":
+    if choice not in fixed_menu or choice == "0":
         return
 
-        try:
-            amount = float(input("Enter amount: "))
-            if choice == "1":
-                result = convert_currency(amount, "USD", "EUR")
-                print(f"{amount} USD = {result:.2f} EUR")
-            elif choice == "2":
-                result = convert_currency(amount, "USD", "IDR")
-                print(f"{amount} USD = {result:.2f} IDR")
-            elif choice == "3":
-                result = convert_currency(amount, "USD", "JPY")
-                print(f"{amount} USD = {result:.2f} JPY")
-            elif choice == "4":
-                result = convert_currency(amount, "IDR", "USD")
-                print(f"{amount} IDR = {result:.2f} USD")
-            elif choice == "5":
-                result = convert_currency(amount, "EUR", "USD")
-                print(f"{amount} EUR = {result:.2f} USD")
-            elif choice == "6":
-                results = get_all_conversions(amount, "IDR")
-                print(f"\n📊 {amount} IDR to popular currencies:")
-                print("-" * 40)
-                for k, v in results.items():
-                    if k in {"USD", "EUR", "JPY", "IDR"}:
-                        print(f"{amount} IDR = {v} {k}")
-            else:
-                print("❌ Invalid menu option.")
-            print()
-        except Exception as e:
-            print(f"⚠ Error: {e}")
+    try:
+        amount = float(input("Enter amount: "))
+        selected = fixed_menu[choice]
+        from_curr = selected["from"]
+        to_curr = selected["to"]
+
+        if to_curr:
+            result = convert_currency(amount, from_curr, to_curr)
+            print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
+        else:
+            results = get_all_conversions(amount, from_curr)
+            frequent_currencies = {"USD", "EUR", "JPY", "IDR"}
+            print(f"\n📊 {amount} {from_curr} to popular currencies:")
+            print("-" * 40)
+            for k, v in results.items():
+                if k in frequent_currencies:
+                    print(f"{amount} {from_curr} = {v} {k}")
+        print()
+
+
+    except Exception as e:
+        print(f"⚠ Error: {e}")
+
 
 def convert_and_print(amount, from_curr, to_curr):
     result = convert_currency(amount, from_curr, to_curr)
