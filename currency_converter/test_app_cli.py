@@ -66,4 +66,4 @@ class TestAppCLI(unittest.TestCase):
         mock_print.assert_any_call("50.0 IDR = 0.0032 USD")
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
