@@ -68,34 +68,34 @@ def fixed_mode():
         "0": {"desc": "Back to Main Menu"}
     }
 
-    print_menu("Currency Converter - Quick Menu", fixed_menu)
-    choice = input("Enter your choice: ")
+    while True:
+        print_menu("Currency Converter - Quick Menu", fixed_menu)
+        choice = input("Enter your choice: ")
 
-    if choice not in fixed_menu or choice == "0":
-        return
+        if choice not in fixed_menu or choice == "0":
+            return
 
-    try:
-        amount = float(input("Enter amount: "))
-        selected = fixed_menu[choice]
-        from_curr = selected["from"]
-        to_curr = selected["to"]
+        try:
+            amount = float(input("Enter amount: "))
+            selected = fixed_menu[choice]
+            from_curr = selected["from"]
+            to_curr = selected["to"]
 
-        if to_curr:
-            result = convert_currency(amount, from_curr, to_curr)
-            print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
-        else:
-            results = get_all_conversions(amount, from_curr)
-            frequent_currencies = {"USD", "EUR", "JPY", "IDR"}
-            print(f"\n📊 {amount} {from_curr} to popular currencies:")
-            print("-" * 40)
-            for k, v in results.items():
-                if k in frequent_currencies:
-                    print(f"{amount} {from_curr} = {v} {k}")
-        print()
+            if to_curr:
+                result = convert_currency(amount, from_curr, to_curr)
+                print(f"{amount} {from_curr} = {result:.2f} {to_curr}")
+            else:
+                results = get_all_conversions(amount, from_curr)
+                frequent_currencies = {"USD", "EUR", "JPY", "IDR"}
+                print(f"\n📊 {amount} {from_curr} to popular currencies:")
+                print("-" * 40)
+                for k, v in results.items():
+                    if k in frequent_currencies:
+                        print(f"{amount} {from_curr} = {v} {k}")
+            print()
 
-
-    except Exception as e:
-        print(f"⚠ Error: {e}")
+        except Exception as e:
+            print(f"⚠ Error: {e}")
 
 def run():
     main_menu = {
