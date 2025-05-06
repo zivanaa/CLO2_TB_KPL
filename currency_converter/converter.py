@@ -1,42 +1,40 @@
 # converter.py
 
 import requests
-from config import BASE_URL, SUPPORTED_CURRENCIES
+from config import BASE_URL, SUPPORTED_CURRENCIES, API_KEY
 
-def is_currency_supported(code):
-    return code in SUPPORTED_CURRENCIES
+def is_currency_supported(currency_code):
+    return any(code == currency_code for code, _ in SUPPORTED_CURRENCIES)
 
 def convert_currency(amount, from_currency, to_currency):
-    assert amount > 0, "Amount must be greater than 0"
-    assert is_currency_supported(from_currency), "Unsupported source currency"
-    assert is_currency_supported(to_currency), "Unsupported target currency"
+    assert is_currency_supported(from_currency), f"{from_currency} not supported"
+    assert is_currency_supported(to_currency), f"{to_currency} not supported"
 
-    url = f"{BASE_URL}/{from_currency}/{to_currency}/{amount}"
+    url = f"{BASE_URL}/{from_currency}/{to_currency}"
     response = requests.get(url)
-
-    if response.status_code != 200:
-        raise Exception("Failed to retrieve exchange rate")
-
     data = response.json()
-    return data["conversion_result"]
+
+    if data["result"] == "success":
+        return amount * data["conversion_rate"]
+    else:
+        raise Exception("Conversion failed from API")
+
 
 def get_all_conversions(amount, from_currency):
-    assert amount > 0, "Amount must be greater than 0"
-    assert is_currency_supported(from_currency), "Unsupported source currency"
-
-    url = f"https://v6.exchangerate-api.com/v6/{"99af1e52e8b504f480478eda"}/latest/{from_currency}"
+    url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{from_currency}"
     response = requests.get(url)
-
-    if response.status_code != 200:
-        raise Exception("Failed to retrieve exchange rates")
-
     data = response.json()
-    conversions = {}
-    for to_currency in SUPPORTED_CURRENCIES:
-        if to_currency == from_currency:
-            continue
-        rate = data["conversion_rates"].get(to_currency)
-        if rate:
-            conversions[to_currency] = round(amount * rate, 2)
-    
-    return conversions
+
+    if data["result"] != "success":
+        raise Exception("Failed to fetch conversion data.")
+
+    conversion_rates = data["conversion_rates"]
+
+    # Ambil hanya kode mata uang dari SUPPORTED_CURRENCIES
+    supported_codes = [code for code, _ in SUPPORTED_CURRENCIES]
+
+    return {
+        code: round(conversion_rates[code] * amount, 2)
+        for code in supported_codes
+        if code in conversion_rates and code != from_currency
+    }

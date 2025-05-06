@@ -1,10 +1,24 @@
 # main.py
 
 from converter import convert_currency, is_currency_supported
+from config import SUPPORTED_CURRENCIES
+
+def display_supported_currencies():
+    print("\n--- Supported Currencies ---")
+    for code, country in SUPPORTED_CURRENCIES:
+        print(f"{code} - {country}")
+    print()
 
 def main():
     print("=== Currency Converter ===")
-    amount = float(input("Enter amount: "))
+    display_supported_currencies()
+
+    try:
+        amount = float(input("Enter amount: "))
+    except ValueError:
+        print("Invalid amount.")
+        return
+
     from_currency = input("From currency (e.g., USD): ").upper()
     to_currency = input("To currency (e.g., IDR): ").upper()
 
