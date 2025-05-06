@@ -31,6 +31,8 @@ class TestCurrencyConverter(unittest.TestCase):
     def test_is_currency_supported_invalid(self):
         self.assertFalse(is_currency_supported("ABC"))
 
+    def test_is_currency_supported_valid(self):
+        self.assertTrue(is_currency_supported("USD"))
 
 if __name__ == '__main__':
     unittest.main()
